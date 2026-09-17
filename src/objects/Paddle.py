@@ -1,7 +1,7 @@
 from .BaseObject import BaseObject
 
 
-# Extends BaseObject
+# Extends BaseObject to make Paddles
 class Paddle(BaseObject):
     def __init__(
         self,

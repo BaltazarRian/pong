@@ -1,6 +1,7 @@
 import turtle
 
 
+# Game Window
 class Window:
     def __init__(self):
         self.wn = turtle.Screen()

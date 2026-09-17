@@ -1,6 +1,7 @@
 from .BaseObject import BaseObject
 
 
+# Extends BaseObject to make Ball
 class Ball(BaseObject):
     def __init__(self, x_pos: int, y_pos: int):
         super().__init__(x_pos, y_pos)
