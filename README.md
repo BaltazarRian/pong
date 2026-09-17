@@ -1,2 +1,0 @@
-# pong
-Python Pong (PyGames)
