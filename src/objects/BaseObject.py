@@ -7,7 +7,6 @@ class BaseObject(turtle.Turtle):
         super().__init__()
         self.score = 0
         self.speed(0)
-        self.shape("square")
         self.color("white")
         self.penup()
         self.goto(x_pos, y_pos)

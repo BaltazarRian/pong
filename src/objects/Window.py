@@ -20,8 +20,10 @@ class Window:
         self.wn.listen()
 
     def onkeypress(self, left_paddle, right_paddle):
+        # Left Paddle Movements
         self.wn.onkeypress(left_paddle.up, "w")
         self.wn.onkeypress(left_paddle.down, "s")
 
+        # Right Paddle Movements
         self.wn.onkeypress(right_paddle.up, "i")
         self.wn.onkeypress(right_paddle.down, "k")
