@@ -6,11 +6,18 @@ from .Ball import Ball
 
 # Game Window
 class Window:
-    def __init__(self, left_paddle: Paddle, right_paddle: Paddle, ball: Ball):
+    def __init__(
+        self,
+        width: int,
+        height: int,
+        left_paddle: Paddle,
+        right_paddle: Paddle,
+        ball: Ball,
+    ):
         self.wn = turtle.Screen()
         self.wn.title("Pong")
         self.wn.bgcolor("black")
-        self.wn.setup(width=800, height=600)
+        self.wn.setup(width, height)
         self.wn.tracer(0)
 
     def update(self):
