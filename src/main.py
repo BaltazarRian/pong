@@ -13,7 +13,7 @@ left_paddle = Paddle(-350, 0, 5, 1, 20, WINDOW_WIDTH, WINDOW_HEIGHT)
 right_paddle = Paddle(350, 0, 5, 1, 20, WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Ball
-ball = Ball(0, 0, 0.1, 0.1, WINDOW_WIDTH, WINDOW_HEIGHT)
+ball = Ball(0, 0, 0.1, 0.1, 1, 1, WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Game Window
 wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT, left_paddle, right_paddle, ball)

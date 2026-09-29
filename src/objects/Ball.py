@@ -9,11 +9,15 @@ class Ball(BaseObject):
         y_pos: int,
         dx: float,
         dy: float,
+        stretch_w: int,
+        stretch_l: int,
         window_width: int,
         window_height: int,
     ):
         super().__init__(x_pos, y_pos, window_width, window_height)
-        self.shapesize(stretch_wid=1, stretch_len=1)
+        self.stretch_w = stretch_w
+        self.stretch_l = stretch_l
+        self.shapesize(stretch_wid=stretch_w, stretch_len=stretch_l)
         self.shape("square")
         self.dx = dx
         self.dy = dy
@@ -21,8 +25,8 @@ class Ball(BaseObject):
         self.window_height = window_height
 
     def _borderCheck(self):
-        height_dif = 290
-        width_dif = 390
+        height_dif = (self.window_height / 2) - (self.stretch_l * 10)  # 290
+        width_dif = (self.window_width / 2) - (self.stretch_w * 10)  # 390
 
         # Y Border Check
         if self.ycor() > height_dif:
