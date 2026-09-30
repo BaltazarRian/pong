@@ -7,8 +7,7 @@ class Ball(BaseObject):
         self,
         x_pos: int,
         y_pos: int,
-        dx: float,
-        dy: float,
+        ball_speed: float,
         stretch_w: int,
         stretch_l: int,
         window_width: int,
@@ -19,8 +18,8 @@ class Ball(BaseObject):
         self.stretch_l = stretch_l
         self.shapesize(stretch_wid=stretch_w, stretch_len=stretch_l)
         self.shape("square")
-        self.dx = dx
-        self.dy = dy
+        self.dx = ball_speed
+        self.dy = ball_speed
         self.window_width = window_width
         self.window_height = window_height
 
