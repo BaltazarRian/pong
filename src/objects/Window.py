@@ -1,8 +1,6 @@
 import turtle
 
 from .Paddle import Paddle
-from .Ball import Ball
-from .Pen import Pen
 
 
 # Game Window

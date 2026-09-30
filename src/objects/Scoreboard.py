@@ -2,7 +2,7 @@ import turtle
 from .Paddle import Paddle
 
 
-class Pen(turtle.Turtle):
+class Scoreboard(turtle.Turtle):
     def __init__(self, screen_height: int):
         super().__init__()
         self.speed(0)
