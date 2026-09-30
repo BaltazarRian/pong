@@ -30,3 +30,6 @@ class Paddle(BaseObject):
         y = self.ycor()
         y -= self.dist
         self.sety(y)
+
+    def addScore(self):
+        self.score += 1

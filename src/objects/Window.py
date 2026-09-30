@@ -2,6 +2,7 @@ import turtle
 
 from .Paddle import Paddle
 from .Ball import Ball
+from .Pen import Pen
 
 
 # Game Window
@@ -10,9 +11,6 @@ class Window:
         self,
         width: int,
         height: int,
-        left_paddle: Paddle,
-        right_paddle: Paddle,
-        ball: Ball,
     ):
         self.wn = turtle.Screen()
         self.wn.title("Pong")
@@ -26,7 +24,7 @@ class Window:
     def listen(self):
         self.wn.listen()
 
-    def onkeypress(self, left_paddle, right_paddle):
+    def onkeypress(self, left_paddle: Paddle, right_paddle: Paddle):
         # Left Paddle Movements
         self.wn.onkeypress(left_paddle.up, "w")
         self.wn.onkeypress(left_paddle.down, "s")

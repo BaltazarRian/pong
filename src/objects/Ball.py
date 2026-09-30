@@ -1,4 +1,10 @@
 from .BaseObject import BaseObject
+from enum import Enum
+
+
+class Players(Enum):
+    PlayerA = "LeftPaddle"
+    PlayerB = "RightPaddle"
 
 
 # Extends BaseObject to make Ball
@@ -39,14 +45,16 @@ class Ball(BaseObject):
         if self.xcor() > width_dif:
             self.goto(0, 0)
             self.dx *= -1
+            return Players.PlayerB
         elif self.xcor() < -width_dif:
             self.goto(0, 0)
             self.dx *= -1
+            return Players.PlayerA
 
     def setX(self):
         self.setx(self.xcor() + self.dx)
-        self._borderCheck()
+        return self._borderCheck()
 
     def setY(self):
         self.sety(self.ycor() + self.dy)
-        self._borderCheck()
+        return self._borderCheck()

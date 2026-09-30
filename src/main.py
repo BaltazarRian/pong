@@ -1,5 +1,6 @@
 from objects.Paddle import Paddle
-from objects.Ball import Ball
+from objects.Ball import Ball, Players
+from objects.Pen import Pen
 from objects.Window import Window
 
 # Constants
@@ -23,8 +24,11 @@ right_paddle = Paddle(
 # Ball
 ball = Ball(0, 0, BALL_SPEED, 1, 1, WINDOW_WIDTH, WINDOW_HEIGHT)
 
+# Scoreboard
+pen = Pen(WINDOW_HEIGHT)
+
 # Game Window
-wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT, left_paddle, right_paddle, ball)
+wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Main game loop
 while True:
@@ -32,9 +36,18 @@ while True:
     wn.listen()
     wn.onkeypress(left_paddle, right_paddle)
 
-    ball.setX()
+    goalCheck = ball.setX()
     ball.setY()
 
+    # Checks for if a player scores
+    if goalCheck is Players.PlayerA:
+        left_paddle.addScore()
+        pen.updateScores(left_paddle, right_paddle)
+    elif goalCheck is Players.PlayerB:
+        right_paddle.addScore()
+        pen.updateScores(left_paddle, right_paddle)
+
+    # Paddle Collision Logic
     if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_POS_DIST) and (
         ball.ycor() < right_paddle.ycor() + 40
         and ball.ycor() > right_paddle.ycor() - 50
