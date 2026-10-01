@@ -1,5 +1,6 @@
-from .BaseObject import BaseObject
 from enum import Enum
+
+from .BaseObject import BaseObject
 
 
 class Players(Enum):

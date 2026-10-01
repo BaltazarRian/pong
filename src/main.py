@@ -1,5 +1,5 @@
-from objects.Paddle import Paddle
 from objects.Ball import Ball, Players
+from objects.Paddle import Paddle
 from objects.Scoreboard import Scoreboard
 from objects.Window import Window
 
@@ -9,7 +9,7 @@ WINDOW_WIDTH = 800
 PADDLE_LENGTH = 1
 PADDLE_WIDTH = 5
 PADDLE_X_POS_DIST = 350
-BALL_SPEED = 0.075
+BALL_SPEED = 0.1
 
 # Left Paddle
 left_paddle = Paddle(

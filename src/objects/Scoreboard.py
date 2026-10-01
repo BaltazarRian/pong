@@ -1,4 +1,5 @@
 import turtle
+
 from .Paddle import Paddle
 
 
@@ -11,7 +12,7 @@ class Scoreboard(turtle.Turtle):
         self.hideturtle()
         self.goto(0, 260)
         self.write(
-            f"Player A: 0 Player B: 0",
+            "Player A: 0 Player B: 0",
             align="center",
             font=("Courier", 24, "normal"),
         )
@@ -19,7 +20,7 @@ class Scoreboard(turtle.Turtle):
     def updateScores(self, left_paddle: Paddle, right_paddle: Paddle):
         self.clear()
         self.write(
-            f"Player A: {left_paddle.score} PlayerB: {right_paddle.score}",
+            f"Player A: {left_paddle.score} Player B: {right_paddle.score}",
             align="center",
             font=("Courier", 24, "normal"),
         )
