@@ -18,17 +18,23 @@ class Paddle(BaseObject):
         self.shape("square")
         self.shapesize(stretch_wid=width, stretch_len=length)
         self.dist = dist
+        self.length = length
+        self.y_limit = (self.height / 2) - (self.length * 50)
 
     # Up Function
     def up(self):
         y = self.ycor()
         y += self.dist
+        if y > self.y_limit:
+            y = self.y_limit
         self.sety(y)
 
     # Down Function
     def down(self):
         y = self.ycor()
         y -= self.dist
+        if y < -self.y_limit:
+            y = -self.y_limit
         self.sety(y)
 
     def addScore(self):
