@@ -31,8 +31,8 @@ class Ball(BaseObject):
         self.window_height = window_height
 
     def _borderCheck(self):
-        height_dif = (self.window_height / 2) - (self.stretch_l * 10)  # 290
-        width_dif = (self.window_width / 2) - (self.stretch_w * 10)  # 390
+        height_dif = (self.window_height / 2) - (self.stretch_l * 20)
+        width_dif = (self.window_width / 2) - (self.stretch_w * 20)
 
         # Y Border Check
         if self.ycor() > height_dif:

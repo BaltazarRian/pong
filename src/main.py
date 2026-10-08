@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
+
+import random
 from objects.Ball import Ball, Players
 from objects.Paddle import Paddle
 from objects.Scoreboard import Scoreboard
 from objects.Window import Window
+from easterEgg import easterEgg
 
 # Constants
 WINDOW_HEIGHT = 600
@@ -22,40 +26,77 @@ right_paddle = Paddle(
 )
 
 # Ball
-ball = Ball(0, 0, BALL_SPEED, 1, 1, WINDOW_WIDTH, WINDOW_HEIGHT)
+ball = Ball(
+    0,
+    0,
+    BALL_SPEED,
+    random.choice([-1, 1]),
+    random.choice([-1, 1]),
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+)
 
 # Scoreboard
 scoreboard = Scoreboard(WINDOW_HEIGHT)
 
 # Game Window
 wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT)
+game_active = True
+easter_egg = False
 
 # Main game loop
 while True:
-    wn.update()
-    wn.listen()
-    wn.onkeypress(left_paddle, right_paddle)
+    try:
+        wn.update()
 
-    goalCheck = ball.setX()
-    ball.setY()
+        if game_active:
+            wn.listen()
+            wn.onkeypress(left_paddle, right_paddle)
 
-    # Checks for if a player scores
-    if goalCheck is Players.PlayerA:
-        left_paddle.addScore()
-        scoreboard.updateScores(left_paddle, right_paddle)
-    elif goalCheck is Players.PlayerB:
-        right_paddle.addScore()
-        scoreboard.updateScores(left_paddle, right_paddle)
+            goalCheck = ball.setX()
+            ball.setY()
 
-    # Paddle Collision Logic
-    if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_POS_DIST) and (
-        ball.ycor() < right_paddle.ycor() + 40
-        and ball.ycor() > right_paddle.ycor() - 50
-    ):
-        ball.setx(340)
-        ball.dx *= -1
-    elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_POS_DIST) and (
-        ball.ycor() < left_paddle.ycor() + 40 and ball.ycor() > left_paddle.ycor() - 50
-    ):
-        ball.setx(-340)
-        ball.dx *= -1
+            # Checks for if a player scores
+            if goalCheck is Players.PlayerA:
+                left_paddle.addScore()
+                scoreboard.updateScores(left_paddle, right_paddle)
+                ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
+                ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
+            elif goalCheck is Players.PlayerB:
+                right_paddle.addScore()
+                scoreboard.updateScores(left_paddle, right_paddle)
+                ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
+                ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
+
+            # Trigger Easter Egg at 3 points
+            if not easter_egg and (left_paddle.score == 3 or right_paddle.score == 3):
+                # Hide the objects
+                left_paddle.hideturtle()
+                right_paddle.hideturtle()
+                ball.hideturtle()
+                scoreboard.clear()
+
+                easterEgg(wn, WINDOW_WIDTH)
+                easter_egg = True
+                game_active = False  # PAUSE GAMEPLAY FOREVER
+
+            # Paddle Collision Logic
+            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_POS_DIST) and (
+                ball.ycor() < right_paddle.ycor() + 40
+                and ball.ycor() > right_paddle.ycor() - 50
+            ):
+                ball.setx(340)
+                ball.dx *= -1
+            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_POS_DIST) and (
+                ball.ycor() < left_paddle.ycor() + 40
+                and ball.ycor() > left_paddle.ycor() - 50
+            ):
+                ball.setx(-340)
+                ball.dx *= -1
+        else:
+            # Game is paused/stopped for easterEgg
+            pass
+
+    except Exception:
+        print("Closed Successfully!")
+        break
