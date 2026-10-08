@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import random
+import time
+
+from easterEgg import easterEgg
 from objects.Ball import Ball, Players
 from objects.Paddle import Paddle
 from objects.Scoreboard import Scoreboard
 from objects.Window import Window
-from easterEgg import easterEgg
 
 # Constants
 WINDOW_HEIGHT = 600
@@ -13,7 +15,7 @@ WINDOW_WIDTH = 800
 PADDLE_LENGTH = 1
 PADDLE_WIDTH = 5
 PADDLE_X_DIST = 350
-BALL_SPEED = 0.1
+BALL_SPEED = 1
 
 # Left Paddle
 left_paddle = Paddle(
@@ -30,8 +32,8 @@ ball = Ball(
     0,
     0,
     BALL_SPEED,
-    random.choice([-1, 1]),
-    random.choice([-1, 1]),
+    random.choice([-BALL_SPEED, BALL_SPEED]),
+    random.choice([-BALL_SPEED, BALL_SPEED]),
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
 )
@@ -48,6 +50,7 @@ easter_egg = False
 while True:
     try:
         wn.update()
+        time.sleep(0.01)
 
         if game_active:
             wn.listen()
@@ -55,6 +58,20 @@ while True:
 
             goalCheck = ball.setX()
             ball.setY()
+
+            # Paddle Collision Logic
+            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_DIST) and (
+                ball.ycor() < right_paddle.ycor() + 40
+                and ball.ycor() > right_paddle.ycor() - 50
+            ):
+                ball.setx(340)
+                ball.dx *= -1
+            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_DIST) and (
+                ball.ycor() < left_paddle.ycor() + 40
+                and ball.ycor() > left_paddle.ycor() - 50
+            ):
+                ball.setx(-340)
+                ball.dx *= -1
 
             # Checks for if a player scores
             if goalCheck is Players.PlayerA:
@@ -79,20 +96,6 @@ while True:
                 easterEgg(wn, WINDOW_WIDTH)
                 easter_egg = True
                 game_active = False  # PAUSE GAMEPLAY FOREVER
-
-            # Paddle Collision Logic
-            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_DIST) and (
-                ball.ycor() < right_paddle.ycor() + 40
-                and ball.ycor() > right_paddle.ycor() - 50
-            ):
-                ball.setx(340)
-                ball.dx *= -1
-            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_DIST) and (
-                ball.ycor() < left_paddle.ycor() + 40
-                and ball.ycor() > left_paddle.ycor() - 50
-            ):
-                ball.setx(-340)
-                ball.dx *= -1
         else:
             # Game is paused/stopped for easterEgg
             pass
