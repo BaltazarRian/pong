@@ -12,17 +12,17 @@ WINDOW_HEIGHT = 600
 WINDOW_WIDTH = 800
 PADDLE_LENGTH = 1
 PADDLE_WIDTH = 5
-PADDLE_X_POS_DIST = 350
+PADDLE_X_DIST = 350
 BALL_SPEED = 0.1
 
 # Left Paddle
 left_paddle = Paddle(
-    -PADDLE_X_POS_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
+    -PADDLE_X_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
 )
 
 # Right Paddle
 right_paddle = Paddle(
-    PADDLE_X_POS_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
+    PADDLE_X_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
 )
 
 # Ball
@@ -68,7 +68,7 @@ while True:
                 ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
                 ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
 
-            # Trigger Easter Egg at 3 points
+            # Trigger easter egg at 3 points
             if not easter_egg and (left_paddle.score == 3 or right_paddle.score == 3):
                 # Hide the objects
                 left_paddle.hideturtle()
@@ -81,13 +81,13 @@ while True:
                 game_active = False  # PAUSE GAMEPLAY FOREVER
 
             # Paddle Collision Logic
-            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_POS_DIST) and (
+            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_DIST) and (
                 ball.ycor() < right_paddle.ycor() + 40
                 and ball.ycor() > right_paddle.ycor() - 50
             ):
                 ball.setx(340)
                 ball.dx *= -1
-            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_POS_DIST) and (
+            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_DIST) and (
                 ball.ycor() < left_paddle.ycor() + 40
                 and ball.ycor() > left_paddle.ycor() - 50
             ):
