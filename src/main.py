@@ -16,6 +16,7 @@ PADDLE_LENGTH = 1
 PADDLE_WIDTH = 5
 PADDLE_X_DIST = 350
 BALL_SPEED = 1
+WIN_CONDITION = 3
 
 # Left Paddle
 left_paddle = Paddle(
@@ -32,11 +33,14 @@ ball = Ball(
     0,
     0,
     BALL_SPEED,
-    random.choice([-BALL_SPEED, BALL_SPEED]),
-    random.choice([-BALL_SPEED, BALL_SPEED]),
+    1,
+    1,
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
 )
+# Randomize starting direction
+ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
+ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
 
 # Scoreboard
 scoreboard = Scoreboard(WINDOW_HEIGHT)
@@ -45,6 +49,10 @@ scoreboard = Scoreboard(WINDOW_HEIGHT)
 wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT)
 game_active = True
 easter_egg = False
+
+# Boundary Calculations (BaseObject size is 20px)
+paddle_half_w = (PADDLE_LENGTH * 20) / 2
+paddle_half_h = (PADDLE_WIDTH * 20) / 2
 
 # Main game loop
 while True:
@@ -59,18 +67,27 @@ while True:
             goalCheck = ball.setX()
             ball.setY()
 
-            # Paddle Collision Logic
-            if (ball.xcor() > 340 and ball.xcor() < PADDLE_X_DIST) and (
-                ball.ycor() < right_paddle.ycor() + 40
-                and ball.ycor() > right_paddle.ycor() - 50
+            right_front_x = right_paddle.xcor() - paddle_half_w
+            left_front_x = left_paddle.xcor() + paddle_half_w
+
+            # Right Paddle Collision
+            if (
+                ball.xcor() >= right_front_x and ball.xcor() <= right_paddle.xcor()
+            ) and (
+                ball.ycor() <= right_paddle.ycor() + paddle_half_h
+                and ball.ycor() >= right_paddle.ycor() - paddle_half_h
             ):
-                ball.setx(340)
+                ball.setx(right_front_x)
                 ball.dx *= -1
-            elif (ball.xcor() < -340 and ball.xcor() > -PADDLE_X_DIST) and (
-                ball.ycor() < left_paddle.ycor() + 40
-                and ball.ycor() > left_paddle.ycor() - 50
+
+            # Left Paddle Collision
+            elif (
+                ball.xcor() <= left_front_x and ball.xcor() >= left_paddle.xcor()
+            ) and (
+                ball.ycor() <= left_paddle.ycor() + paddle_half_h
+                and ball.ycor() >= left_paddle.ycor() - paddle_half_h
             ):
-                ball.setx(-340)
+                ball.setx(left_front_x)
                 ball.dx *= -1
 
             # Checks for if a player scores
@@ -86,7 +103,10 @@ while True:
                 ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
 
             # Trigger easter egg at 3 points
-            if not easter_egg and (left_paddle.score == 3 or right_paddle.score == 3):
+            if not easter_egg and (
+                left_paddle.score == WIN_CONDITION
+                or right_paddle.score == WIN_CONDITION
+            ):
                 # Hide the objects
                 left_paddle.hideturtle()
                 right_paddle.hideturtle()
@@ -97,9 +117,10 @@ while True:
                 easter_egg = True
                 game_active = False  # PAUSE GAMEPLAY FOREVER
         else:
-            # Game is paused/stopped for easterEgg
+            # Pause game for easterEgg
             pass
 
     except Exception:
+        # Close gracefully regardless of what happens
         print("Closed Successfully!")
         break
