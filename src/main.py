@@ -18,14 +18,31 @@ PADDLE_X_DIST = 350
 BALL_SPEED = 1
 WIN_CONDITION = 3
 
+LEFT_PADDLE_NAME = input("Left Paddle: ")
+RIGHT_PADDLE_NAME = input("Right Paddle: ")
+
 # Left Paddle
 left_paddle = Paddle(
-    -PADDLE_X_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
+    -PADDLE_X_DIST,
+    0,
+    PADDLE_WIDTH,
+    PADDLE_LENGTH,
+    20,
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    RIGHT_PADDLE_NAME,
 )
 
 # Right Paddle
 right_paddle = Paddle(
-    PADDLE_X_DIST, 0, PADDLE_WIDTH, PADDLE_LENGTH, 20, WINDOW_WIDTH, WINDOW_HEIGHT
+    PADDLE_X_DIST,
+    0,
+    PADDLE_WIDTH,
+    PADDLE_LENGTH,
+    20,
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    LEFT_PADDLE_NAME,
 )
 
 # Ball
@@ -43,7 +60,7 @@ ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
 ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
 
 # Scoreboard
-scoreboard = Scoreboard(WINDOW_HEIGHT)
+scoreboard = Scoreboard(WINDOW_HEIGHT, left_paddle, right_paddle)
 
 # Game Window
 wn = Window(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -58,7 +75,7 @@ paddle_half_h = (PADDLE_WIDTH * 20) / 2
 while True:
     try:
         wn.update()
-        time.sleep(0.01)
+        time.sleep(0.0075)
 
         if game_active:
             wn.listen()
@@ -93,12 +110,12 @@ while True:
             # Checks for if a player scores
             if goalCheck is Players.PlayerA:
                 left_paddle.addScore()
-                scoreboard.updateScores(left_paddle, right_paddle)
+                scoreboard.updateScores()
                 ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
                 ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
             elif goalCheck is Players.PlayerB:
                 right_paddle.addScore()
-                scoreboard.updateScores(left_paddle, right_paddle)
+                scoreboard.updateScores()
                 ball.dx = random.choice([-BALL_SPEED, BALL_SPEED])
                 ball.dy = random.choice([-BALL_SPEED, BALL_SPEED])
 

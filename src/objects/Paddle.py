@@ -12,6 +12,7 @@ class Paddle(BaseObject):
         dist: int,
         window_width: int,
         window_height: int,
+        name: str,
     ):
         super().__init__(x_pos, y_pos, window_width, window_height)
         self.score = 0
@@ -20,6 +21,7 @@ class Paddle(BaseObject):
         self.dist = dist
         self.length = length
         self.y_limit = (self.height / 2) - (self.length * 50)
+        self.name = name
 
     # Up Function
     def up(self):
