@@ -27,16 +27,18 @@ class Paddle(BaseObject):
     def up(self):
         y = self.ycor()
         y += self.dist
-        if y > self.y_limit:
-            y = self.y_limit
+        y = min(y, self.y_limit)
+        # if y > self.y_limit:
+        #     y = self.y_limit
         self.sety(y)
 
     # Down Function
     def down(self):
         y = self.ycor()
         y -= self.dist
-        if y < -self.y_limit:
-            y = -self.y_limit
+        y = max(y, -self.y_limit)
+        # if y < -self.y_limit:
+        #     y = -self.y_limit
         self.sety(y)
 
     def addScore(self):

@@ -28,7 +28,7 @@ def easterEgg(window: Window, window_width: int):
                                                          /__________/
     """
 
-    # Starts far off-screen
+    # Start far off-screen
     x = -950
 
     # Flies the plane
@@ -37,7 +37,7 @@ def easterEgg(window: Window, window_width: int):
         plane.goto(x, -90)  # Lowered Y to accommodate the larger art
         plane.write(ascii_art, align="left", font=("Courier", 10, "bold"))
 
-        x += 6  # Slower, smoother glide
+        x += 8  # Slower, smoother glide
         window.update()
         time.sleep(0.05)  # Keep the visual easy to track
 
